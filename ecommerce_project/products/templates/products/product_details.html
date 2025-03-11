@@ -1,0 +1,47 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+{% load static %}
+<div class="imp">
+    <div class="back"><a href="{% url 'products' %}"><i class="fas fa-arrow-left"></i></a></div>
+    <div class="product-detail">
+        <div class="main-image">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                No Images
+            {% endif %}
+        </div>
+        
+        <div class="right-column">
+            <h1>{{ product.name }}</h1>
+            <p class="price">Price: ₹{{ product.price }}</p>
+            <p class="category">Category: {{ product.category }}</p>
+            <p class="description">Description: {{ product.description }}</p>
+            <button class="add-to-cart"><a href="{% url 'add_to_cart' product.id %}">Add to Cart</a></button>
+            <button class="buy-now"><a href="{% url 'summery' %}">Buy</a></button>
+        </div>
+    </div>
+    <div class="reviews-container">
+        <div class="reviews">
+            <h3>Reviews</h3>
+            {% for review in reviews %}
+                <div class=review>
+                    <p><strong>{{ review.user.username }} :-: </strong>Review : {{ review.comment }} | Rating : {{ review.rating }} ⭐ star</p>
+                </div>
+            {% empty %}
+                <div>No reviews yet.</div>
+            {% endfor %}
+                </div>
+        <div class="review-form">
+            <h3>Leave a review</h3>
+            <form method="POST" action="{% url 'add_review' product.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br>
+                <button type="submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

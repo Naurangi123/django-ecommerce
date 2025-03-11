@@ -1,0 +1,27 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+{% load static %}
+
+<div class="product">
+    <div class="items">
+        {% for item in product %}
+        <div class="item-box">
+            {% if item.image %}
+            <div class="item-image">
+                <img src="{{ item.image.url }}" alt="Product Image">
+                <hr>
+            </div>
+            {% endif %}
+            <div class="item-info">
+                <p><strong>Name</strong>: {{ item.name }}</p>
+                <p><strong>Price</strong>: ₹{{ item.price }}</p>
+                <p><strong>Category</strong>: {{ item.category }}</p>
+                <p><strong>Description</strong>: {{ item.description|truncatechars:20 }}</p>
+            </div>
+            <hr>
+        </div>
+        {% endfor %}
+    </div>
+</div> 
+{% endblock %}

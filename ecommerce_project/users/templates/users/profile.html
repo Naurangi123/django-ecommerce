@@ -1,0 +1,32 @@
+{% extends "users/base.html" %}
+{% block content %}
+ 
+{% if user.is_authenticated %}
+<div class="pro-cart">
+    <div class="profile-section">
+        <div class="profile-image">
+            {% if userprofile.image %}
+            <img src="{{ userprofile.image.url }}" alt="Profile Image">
+            {% endif %}
+            <button class="edit-icon"><a href="{% url 'profile-update' %}"><i class="fas fa-edit"></i></a></button>
+        </div>
+        <div class="profile-info">
+            <p>First Name :{{ userprofile.fname }}</p>
+            <p>Last Name :{{ userprofile.lname }}</p>
+            <p>Address: {{ userprofile.address }}</p>
+            <p>Date: {{ userprofile.date }}</p>
+        </div>
+    </div>
+    <div class="cart-order-section">
+        <div class="cart-product"><a href="{% url 'cart_detail' %}">Cart Product</a></div>
+        <div class="order-product"><a href="#">Order Product</a></div>
+        <div class="social-icons">
+            <button class="icon github"><i class="fab fa-github"></i></button>
+            <button class="icon twitter"><i class="fab fa-twitter"></i></button>
+            <button class="icon linkedin"><i class="fab fa-linkedin"></i></button>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

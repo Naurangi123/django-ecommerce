@@ -1,0 +1,222 @@
+ecommerce_project/
+│
+├── ecommerce_project/          # Project directory
+│   ├── __init__.py
+│   ├── settings.py             # Project settings
+│   ├── urls.py                 # Project URL configurations
+│   ├── wsgi.py                 # WSGI entry point for deployment
+│   └── asgi.py                 # ASGI entry point for async deployment (if needed)
+│
+├── products/                   # App for handling products
+│   ├── __init__.py
+│   ├── admin.py                # Admin interface configurations
+│   ├── apps.py
+│   ├── models.py               # Models for products
+│   ├── tests.py
+│   ├── urls.py                 # URLs specific to products
+│   ├── views.py                # Views for handling product-related requests
+│   └── templates/              # Templates for product-related pages
+│       └── products/
+│           ├── product_list.html
+│           ├── product_detail.html
+│           └── product_form.html
+│
+├── users/                      # App for handling user accounts
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py                # Forms for user registration and login
+│   ├── models.py               # Models for user profiles
+│   ├── tests.py
+│   ├── urls.py                 # URLs specific to users
+│   ├── views.py                # Views for user-related requests
+│   └── templates/
+│       └── users/
+│           ├── login.html
+│           ├── register.html
+│           └── profile.html
+│
+├── orders/                     # App for handling orders
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py               # Models for orders
+│   ├── forms.py                # Forms for order checkout
+│   ├── tests.py
+│   ├── urls.py                 # URLs specific to orders
+│   ├── views.py                # Views for order processing
+│   └── templates/
+│       └── orders/
+│           ├── checkout.html
+│           └── order_summary.html
+│
+├── static/                     # Static files (CSS, JS, images)
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── media/                      # User-uploaded files (e.g., product images)
+│
+└── manage.py                   # Django management script
+
+
+--------------------- E-R Diagram ------------------------------------
+
++-----------------+      +-----------------+
+|     User        |      |     Category    |
++-----------------+      +-----------------+
+| UserID (PK)     |      | CategoryID (PK) |
+| Username        |      | Name            |
+| Email           |      | Description     |
+| Password        |      +-----------------+
+| FirstName       |
+| LastName        |
+| Address         |
+| PhoneNumber     |
+| DateJoined      |
++-----------------+       |       |
+        |                 |       |
+        |                 |       |
+        |                 |       |
+        |                 |       |
+        |                 |       |
+        |                 |       |
++-----------------+      +-----------------+      +-----------------+
+|    Order        |      |     Product     |      |   Review        |
++-----------------+      +-----------------+      +-----------------+
+| OrderID (PK)    |      | ProductID (PK)  |      | ReviewID (PK)   |
+| UserID (FK)     |      | Name            |      | ProductID (FK)  |
+| OrderDate       |      | Description     |      | UserID (FK)     |
+| ShippingAddress |      | Price           |      | Rating          |
+| TotalAmount     |      | StockQuantity   |      | Comment         |
+| Status          |      | ImageURL        |      | ReviewDate      |
++-----------------+      | CategoryID (FK) |      +-----------------+
+        |               +-----------------+
+        |
+        |
+        |
+        |
++-----------------+
+|  OrderItem      |
++-----------------+
+| OrderItemID (PK)|
+| OrderID (FK)    |
+| ProductID (FK)  |
+| Quantity        |
+| Price           |
++-----------------+
+
++-----------------+      +-----------------+
+|    Cart         |      |   CartItem      |
++-----------------+      +-----------------+
+| CartID (PK)     |      | CartItemID (PK) |
+| UserID (FK)     |      | CartID (FK)     |
++-----------------+      | ProductID (FK)  |
+                         | Quantity        |
+                         +-----------------+
+
+-------------------- Entities------------------------
+
+Entities:
+
+User
+Product
+Category
+Order
+OrderItem
+Review
+Cart
+CartItem
+
+
+-------------------------Relationships-----------------------------
+
+E-R Diagram Details
+1. User
+
+Attributes:
+UserID (Primary Key)
+Username
+Email
+Password
+FirstName
+LastName
+Address
+PhoneNumber
+DateJoined
+
+
+2. Product
+
+Attributes:
+ProductID (Primary Key)
+Name
+Description
+Price
+StockQuantity
+ImageURL
+CategoryID (Foreign Key)
+
+
+3. Category
+
+Attributes:
+CategoryID (Primary Key)
+Name
+Description
+
+
+4. Order
+
+Attributes:
+OrderID (Primary Key)
+UserID (Foreign Key)
+OrderDate
+ShippingAddress
+TotalAmount
+Status
+
+
+5. OrderItem
+
+Attributes:
+OrderItemID (Primary Key)
+OrderID (Foreign Key)
+ProductID (Foreign Key)
+Quantity
+Price
+
+
+6. Review
+
+Attributes:
+ReviewID (Primary Key)
+ProductID (Foreign Key)
+UserID (Foreign Key)
+Rating
+Comment
+ReviewDate
+
+
+7. Cart
+
+Attributes:
+CartID (Primary Key)
+UserID (Foreign Key)
+8. CartItem
+
+Attributes:
+CartItemID (Primary Key)
+CartID (Foreign Key)
+ProductID (Foreign Key)
+Quantity
+Relationships:
+User - Order: One-to-Many (One user can have multiple orders)
+Order - OrderItem: One-to-Many (One order can have multiple order items)
+Product - OrderItem: One-to-Many (One product can appear in multiple order items)
+Product - Category: Many-to-One (Multiple products belong to one category)
+Product - Review: One-to-Many (One product can have multiple reviews)
+User - Review: One-to-Many (One user can leave multiple reviews)
+User - Cart: One-to-One (One user has one cart)
+Cart - CartItem: One-to-Many (One cart can have multiple cart items)
+Product - CartItem: One-to-Many (One product can be in multiple cart items)

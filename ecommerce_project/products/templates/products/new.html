@@ -1,0 +1,33 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+{% load static %}
+<div>
+    <div class="product-detail">
+        <div class="left-column">
+            <div class="thumbnail">
+                <img src="{% static '/images/img8.jpg' %}" alt="Product Image">
+            </div>
+            <div class="thumbnail">
+                <img src="{% static '/images/img01.jpg' %}" alt="Product Image">
+            </div>
+            <div class="thumbnail">
+                <img src="{% static '/images/img9.jpg' %}" alt="Product Image">
+            </div>
+            <div class="thumbnail">
+                <img src="{% static '/images/img7.jpg' %}" alt="Product Image">
+            </div>
+        </div>
+        <div class="main-image">
+            <img src="{% static '/images/img8.jpg' %}" alt="Product Main Image">
+        </div>
+        <div class="right-column">
+            <h1>Product Name</h1>
+            <p class="price">₹99.99</p>
+            <p class="description">This is a short description of the product. It covers the main features and highlights.</p>
+            <button class="add-to-cart">Add to Cart</button>
+            <button class="buy-now">Buy</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

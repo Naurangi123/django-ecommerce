@@ -1,0 +1,47 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<div class="cart-container">
+    <div class="item-cart-info">
+        <h2>Your Cart</h2>
+        <div class="back-to-product"><a href="{% url 'products' %}"><i class="fas fa-arrow-left"></i></a></div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% if cart_items %}
+        <div class="carts">
+            {% for item in cart_items %}
+            <div class="cart-box">
+                <div class="cart-image">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                </div>
+                <hr>
+                <div class="cart-info">
+                    <p><strong>Item</strong>: {{ item.product.name }}</p>
+                    <p><strong>Quantity</strong>: <span id="quantity">{{ item.quantity }}</span></p>
+                    <p><strong>Price</strong>: ₹<span id="price">{{ item.product.price }}</span></p>
+                    <p><strong>Total Price</strong>: ₹<span id="total-price">{{ item.total_price }}</span></p>
+                </div>
+                <div class="cart-links">
+                    <a href="{% url 'checkout' %}"><i class="fas fa-money-check-dollar"></i></a>
+                    <a href="{% url 'delete_from_cart' product_id=item.product.id %}"><i class="fas fa-trash"></i></a>
+                <div class="quantity-form">
+                    <form action="{% url 'edit_cart' item.id %}" method="POST">
+                            {% csrf_token %}
+                            <input class="num" type="number" name="quantity" value="{{ item.quantity }}" min="0" max="100"/>
+                            <button type="submit"><i class="fas fa-edit"></i></button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

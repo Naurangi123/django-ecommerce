@@ -1,0 +1,20 @@
+Explanation and Structure:
+
+1.App: users:
+
+Contains the User model extending AbstractUser to include additional fields like first_name, last_name, address, and date_joined.
+
+
+2.App: products:
+
+Contains Category, Product, and Review models.
+Product has a foreign key to Category.
+Review has foreign keys to both Product and User.
+
+
+3.App: orders:
+
+Contains Order, OrderItem, Cart, and CartItem models.
+OrderItem has a foreign key to Order and Product.
+CartItem has a foreign key to Cart and Product.
+Order and Cart are linked to the User model.
